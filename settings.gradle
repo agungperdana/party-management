@@ -8,3 +8,6 @@
  */
 
 rootProject.name = 'party-management'
+
+include 'api'
+include 'impl'
