@@ -86,7 +86,7 @@ public class PartyServiceImpl implements PartyService
 	{
 		Optional<Party> opt = repo.findOneByCode(command.getCode());
 		Preconditions.checkState(opt.isPresent(), "Party with code [%s] does not exist", command.getCode());
-		
+		opt.get().update(command.getName(), command.getPartyType(), command.getBirthDate(), command.getTaxCode());
 		return mapper.toData(opt.get());
 	}
 

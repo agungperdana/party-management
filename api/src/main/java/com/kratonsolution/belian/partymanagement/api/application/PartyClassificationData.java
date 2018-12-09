@@ -1,5 +1,7 @@
 package com.kratonsolution.belian.partymanagement.api.application;
 
+import com.kratonsolution.belian.partymanagement.api.model.PartyClassificationType;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,4 +13,7 @@ import lombok.Setter;
 @Setter
 public class PartyClassificationData
 {
+	private PartyClassificationType type;
+	
+	private boolean active;
 }

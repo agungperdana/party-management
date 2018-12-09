@@ -19,13 +19,10 @@ public class PartyUpdateCommand
 	@NonNull
 	private String code;
 
-	@NonNull
 	private String name;
 	
-	@NonNull
 	private PartyType partyType;
 
-	@NonNull
 	private LocalDate birthDate;
 
 	private String taxCode;
