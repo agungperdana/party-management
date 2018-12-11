@@ -18,4 +18,6 @@ public class ContactData
 	private ContactType type;
 	
 	private String note;
+	
+	private boolean active;
 }

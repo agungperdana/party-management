@@ -17,7 +17,9 @@ import javax.persistence.Version;
 
 import com.google.common.base.Preconditions;
 import com.kratonsolution.belian.partymanagement.api.model.AddressType;
+import com.kratonsolution.belian.partymanagement.api.model.ContactType;
 import com.kratonsolution.belian.partymanagement.api.model.PartyType;
+import com.kratonsolution.belian.partymanagement.api.model.RoleType;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -68,9 +70,6 @@ public class Party
 	@OneToMany(mappedBy="party", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Set<PartyRole> roles = new HashSet<>();
 
-	@OneToMany(mappedBy="party", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private Set<PartyRelationship> relationships = new HashSet<>();
-
 	Party(){}
 
 	public Party(@NonNull String code, @NonNull String name, @NonNull PartyType partyType, @NonNull LocalDate birthDate, String taxCode) {
@@ -101,7 +100,7 @@ public class Party
 		}
 	}
 	
-	public Address createAddress(@NonNull AddressType type, @NonNull String content) {
+	public Address addAddress(@NonNull AddressType type, @NonNull String content) {
 		
 		Optional<Address> duplicate = this.addresses.stream().filter(add -> {
 			return add.getType().equals(type) && add.getContent().equalsIgnoreCase(content);
@@ -116,4 +115,48 @@ public class Party
 		
 		return address;
 	}
+	
+	public void deleteAddress(@NonNull Address address) {
+		
+		this.addresses.removeIf(add -> add.getId().equals(address.getId()));
+	}
+	
+	public Contact addContact(@NonNull ContactType type, @NonNull String content, String note) {
+		
+		Optional<Contact> duplicate = this.contacts.stream().filter(con -> {
+			return con.getContent().equals(content) && con.getType().equals(type);
+		}).findFirst();
+		
+		Preconditions.checkState(!duplicate.isPresent(), "Contact with same description already exist.");
+		
+		Contact contact = new Contact(this, type, content, note);
+		contact.activate();
+		
+		this.contacts.add(contact);
+		
+		return contact;
+	}
+	
+	public void deleteContact(@NonNull Contact contact) {
+		this.contacts.removeIf(con -> con.getId().equals(contact.getId()));
+	}
+	
+	public PartyRole addRole(@NonNull LocalDate start, LocalDate end, @NonNull RoleType type) {
+		
+		Optional<PartyRole> duplicate = this.roles.stream().filter(role -> {
+			return role.getType().equals(type) && role.getStart().equals(start);
+		}).findFirst();
+		
+		Preconditions.checkState(!duplicate.isPresent(), "Role with same type already exist.");
+		
+		PartyRole role = new PartyRole(this, start, end, type);
+		this.roles.add(role);
+		
+		return role;
+	}
+	
+	public void deleteRole(@NonNull PartyRole role) {
+		this.roles.removeIf(com->com.getId().equals(role.getId()));
+	}
+	
 }
