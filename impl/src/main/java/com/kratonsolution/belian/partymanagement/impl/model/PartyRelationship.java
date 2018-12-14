@@ -14,6 +14,8 @@ import javax.persistence.Version;
 import com.kratonsolution.belian.partymanagement.api.model.RelationshipType;
 
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * @author Agung Dodi Perdana
@@ -30,6 +32,7 @@ public class PartyRelationship
 	@Column
 	private LocalDate start;
 
+	@Setter
 	@Column
 	private LocalDate end;
 
@@ -42,7 +45,18 @@ public class PartyRelationship
 	@Column
 	@Enumerated(EnumType.STRING)
 	private RelationshipType type;
-	
+		
 	@Version
 	private Long version;
+	
+	PartyRelationship(){}
+	
+	public PartyRelationship(@NonNull LocalDate start, LocalDate end, @NonNull String fromPartyCode, @NonNull String toPartyCode, @NonNull RelationshipType type)
+	{
+		this.start = start;
+		this.end = end;
+		this.fromPartyCode = fromPartyCode;
+		this.toPartyCode = toPartyCode;
+		this.type = type;
+	}
 }

@@ -26,4 +26,5 @@ public interface PartyRelationshipRepository extends JpaRepository<PartyRelation
 				@NonNull @Param("fromPartyCode")String fromPartyCode, 
 				@NonNull @Param("toPartyCode")String toPartyCode, 
 				@NonNull @Param("type")RelationshipType type);
+	
 }
