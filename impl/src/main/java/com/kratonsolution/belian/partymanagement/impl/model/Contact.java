@@ -46,7 +46,7 @@ public class Contact
 
 	@ManyToOne
 	@JoinColumn(name="fk_party")
-	private Party parent;
+	private Party party;
 
 	@Version
 	private Long version;
@@ -55,7 +55,7 @@ public class Contact
 
 	public Contact(@NonNull Party parent, @NonNull ContactType type, @NonNull String content, String note)
 	{
-		this.parent = parent;
+		this.party = parent;
 		this.content = content;
 		this.type = type;
 		this.note = note;

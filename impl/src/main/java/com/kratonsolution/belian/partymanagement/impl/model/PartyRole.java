@@ -41,7 +41,7 @@ public class PartyRole
 	
 	@ManyToOne
 	@JoinColumn(name="fk_party")
-	private Party parent;
+	private Party party;
 	
 	@Version
 	private Long version;
@@ -53,6 +53,6 @@ public class PartyRole
 		this.start = start;
 		this.end = end;
 		this.type = type;
-		this.parent = parent;
+		this.party = parent;
 	}
 }
